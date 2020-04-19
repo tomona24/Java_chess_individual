@@ -43,6 +43,7 @@ public class Pieces{
         pieces[31] = new Rook(new Position(8, 8),false);
     }
 
+
     public Piece[] getPieces() {
         return pieces;
     }

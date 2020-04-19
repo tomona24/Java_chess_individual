@@ -18,6 +18,7 @@ public class GameController {
 
         String input = Input.getUserInput("Enter UCI (type 'help' for help) : ");
         showHelp();
+
 //        switch (input) {
 //            case HELP:
 //                showHelp();

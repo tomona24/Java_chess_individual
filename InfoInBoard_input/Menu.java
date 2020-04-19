@@ -18,6 +18,8 @@ public class Menu {
         System.out.println(square);
         System.out.println(UCI);
     }
+
+
 //
 //    public static void showResign() {
 //        System.out.println("Game over - XXXX won by resignation");

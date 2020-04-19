@@ -69,6 +69,7 @@ public class Input {
         }
     }
 
+
     private static boolean checkNum(Character c) {
         try {
             int num = Integer.parseInt(String.valueOf(c));
@@ -81,6 +82,7 @@ public class Input {
             return false;
         }
     }
+
 
     private static boolean checkAlpha(Character c) {
         if ((int)Character.toUpperCase(c) >= 65 && (int)Character.toUpperCase(c) < 73) {
