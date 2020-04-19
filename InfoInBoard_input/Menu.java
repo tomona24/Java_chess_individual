@@ -1,7 +1,5 @@
 package InfoInBoard_input;
 
-import InfoInBoard_board.Board;
-
 public class Menu {
 
     public static void showHelp() {
