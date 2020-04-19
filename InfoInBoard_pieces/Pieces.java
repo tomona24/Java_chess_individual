@@ -25,7 +25,6 @@ public class Pieces{
         pieces[13] = new Bishop(new Position(6, 1),true);
         pieces[14] = new Knight(new Position(7, 1),true);
         pieces[15] = new Rook(new Position(8, 1),true);
-
         pieces[16] = new Pawn(new Position(1, 7),false);
         pieces[17] = new Pawn(new Position(2, 7),false);
         pieces[18] = new Pawn(new Position(3, 7),false);
