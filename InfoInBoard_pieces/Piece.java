@@ -25,9 +25,10 @@ public abstract class Piece {
 
     public abstract String getPiece();
 
-    //    public abstract void canMove();
-    public abstract ArrayList isValidMove(int fromX, int fromY);
+    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
 
+        return null;
+    }
 
     @Override
     public boolean equals(Object obj) {

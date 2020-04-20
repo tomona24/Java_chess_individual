@@ -1,4 +1,4 @@
-public class infoInBoard_Driver {
+public class Main {
     public static void main(String[] args) throws Exception {
         GameController.startGame();
     }

@@ -17,17 +17,30 @@ public class Knight extends Piece{
         return "♞";
     }
 
+
     @Override
-    public ArrayList isValidMove(int fromX, int fromY) {
+    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
         ArrayList<int[]> list = new ArrayList<>();
-        list.add(new int[]{fromX - 1, fromY + 2});
-        list.add(new int[]{fromX - 1, fromY - 2});
-        list.add(new int[]{fromX + 1, fromY + 2});
-        list.add(new int[]{fromX + 1, fromY - 2});
-        list.add(new int[]{fromX + 2, fromY - 1});
-        list.add(new int[]{fromX + 2, fromY + 1});
-        list.add(new int[]{fromX - 2, fromY - 1});
-        list.add(new int[]{fromX - 2, fromY + 1});
+        int[][] allPossibilities = new int[][]{
+        {fromX - 1, fromY + 2},
+        {fromX - 1, fromY - 2},
+        {fromX + 1, fromY + 2},
+        {fromX + 1, fromY - 2},
+        {fromX + 2, fromY - 1},
+        {fromX + 2, fromY + 1},
+        {fromX - 2, fromY - 1},
+        {fromX - 2, fromY + 1}
+        };
+
+        for (int[] possible: allPossibilities
+        ) {
+            int x = possible[0];
+            int y = possible[1];
+            Piece toPiece = pieces.getPieces()[x][y];
+            if(toPiece == null || toPiece.getIsWhite() != getIsWhite() && !(x == 8 || x == -1 || y == 8 || y == -1)) {
+                list.add(possible);
+            }
+        }
         return list;
     }
 

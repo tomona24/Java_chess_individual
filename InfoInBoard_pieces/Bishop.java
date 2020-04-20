@@ -17,29 +17,58 @@ public class Bishop extends Piece {
         return "♝";
     }
 
-    @Override
-    public ArrayList isValidMove(int fromX, int fromY) {
-        ArrayList<int[]> list = new ArrayList<>();
-        int kariX = fromX;
-        int kariY = fromY;
 
-        while(kariX < 8 || kariY < 8) {
-            list.add(new int[]{++kariX, ++kariY});
+    @Override
+    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
+        ArrayList<int[]> list = new ArrayList<>();
+        int kariX = fromX + 1;
+        int kariY = fromY + 1;
+        Piece[][] pieceList = pieces.getPieces();
+        while (kariX < 8 || kariY < 8) {
+            if (pieceList[kariX][kariY] == null) {
+                list.add(new int[]{kariX++, kariY++});
+            } else {
+                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
+                    list.add(new int[]{kariX, kariY});
+                }
+                break;
+            }
         }
-        kariX = fromX;
-        kariY = fromY;
-        while(kariX < 8 || kariY > -1) {
-            list.add(new int[]{++ kariX, --kariY});
+        kariX = fromX + 1;
+        kariY = fromY - 1;
+        while (kariX < 8 || kariY > -1) {
+            if (pieceList[kariX][kariY] == null) {
+                list.add(new int[]{kariX++, kariY--});
+            } else {
+                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
+                    list.add(new int[]{kariX, kariY});
+                }
+                break;
+            }
         }
-        kariX = fromX;
-        kariY = fromY;
-        while(kariX > -1 || kariY < 8) {
-            list.add(new int[]{--kariX, ++kariY});
+        kariX = fromX - 1;
+        kariY = fromY + 1;
+        while (kariX > -1 || kariY < 8) {
+            if (pieceList[kariX][kariY] == null) {
+                list.add(new int[]{kariX--, kariY++});
+            } else {
+                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
+                    list.add(new int[]{kariX, kariY});
+                }
+                break;
+            }
         }
-        kariX = fromX;
-        kariY = fromY;
-        while(kariX > -1 || kariY > -1) {
-            list.add(new int[]{--kariX, --kariY});
+        kariX = fromX - 1;
+        kariY = fromY - 1;
+        while (kariX > -1 || kariY > -1) {
+            if (pieceList[kariX][kariY] == null) {
+                list.add(new int[]{kariX--, kariY--});
+            } else {
+                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
+                    list.add(new int[]{kariX, kariY});
+                }
+                break;
+            }
         }
         return list;
     }

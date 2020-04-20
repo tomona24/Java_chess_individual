@@ -1,10 +1,12 @@
 package InfoInBoard_board;
 
 
+import InfoInBoard_input.Movement;
 import InfoInBoard_pieces.Piece;
 import InfoInBoard_pieces.Pieces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private Pieces pieces;
@@ -77,7 +79,7 @@ public class Board {
 
 
     public void movement(String input) {
-        int[] letters = makeLettersList(input);
+        int[] letters = Movement.makeLettersList(input);
         moveFromTo(letters);
         reloadBoard();
     }
@@ -88,39 +90,20 @@ public class Board {
      * @return
      */
 
-    private int[] makeLettersList(String input){
-        int[] letters = new int[input.length()];
-        for(int i = 0; i < input.length(); i++) {
-            if(i % 2 == 0) {
-                letters[i] = (int)Character.toUpperCase(input.charAt(i)) - 64 - 1;
-            } else {
-                letters[i] = Integer.parseInt(String.valueOf(input.charAt(i))) - 1;
-            }
-        }
-        return letters;
-    }
+
 
 
     /**
      * check the move (2letters)
      * @return
      */
-    public ArrayList<int[]> checkThePossibilities(int[] letters){
-        int fromX = letters[1];
-        int fromY = letters[2];
+    public List<int[]> checkThePossibilities(int fromX, int fromY){
         Piece[][] pieces = this.pieces.getPieces();
-        Piece piece = pieces[fromX][fromX];
-        ArrayList<int[]> possibilities = piece.isValidMove(fromX, fromY);
-        for(int i = 0; i < possibilities.size(); i++) {
-            int[] position = (int[]) possibilities.get(i);
-            Piece pieceTo = pieces[position[0]][position[1]];
-            if(pieceTo != null && pieceTo.getIsWhite() == piece.getIsWhite()) {
-                possibilities.remove(i);
-            }
-        }
+        Piece piece = pieces[fromX][fromY];
+        System.out.println("white:" + piece.getIsWhite() + piece.getPiece() + " x:" + fromX + " y:" + fromY);
+        List<int[]> possibilities = piece.possibleMovement(fromX, fromY, this.pieces);
         return possibilities;
     }
-
 
 
     // check the move (4letters)
@@ -129,25 +112,28 @@ public class Board {
         int fromY = letters[1];
         int toX = letters[2];
         int toY = letters[3];
-        int[] to = new int[]{toX, toY};
         Piece[][] pieces = this.pieces.getPieces();
-        ArrayList<int[]> possibilities = checkThePossibilities(letters);
+        List<int[]> possibilities = checkThePossibilities(fromX, fromY);
+        boolean canMove = false;
         for (int[] position: possibilities
              ) {
-            System.out.println(position[0] + position[1]);
+            if(position[0] == toX && position[1] == toY){
+                canMove = true;
+                break;
+            }
         }
-//        boolean canMove = false;
-//        for (Object position: possibilities
-//             ) {
-//            if(position.equals(to)){
-//                canMove = true;
-//                break;
-//            }
-//        }
-//        if(canMove) {
+        if(canMove) {
             pieces[toX][toY] = pieces[fromX][fromY];
             pieces[fromX][fromY] = null;
         }
-//    }
+    }
 
+    public void showPossibility(String input) {
+        int[] letters = Movement.makeLettersList(input);
+        List<int[]> possibilities = checkThePossibilities(letters[0], letters[1]);
+        for (int[] possible: possibilities
+             ) {
+            System.out.println(Movement.convertIntToPosition(possible));
+        }
+    }
 }

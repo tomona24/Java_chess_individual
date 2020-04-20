@@ -16,19 +16,5 @@ public class Menu {
         System.out.println(square);
         System.out.println(UCI);
     }
-<<<<<<< HEAD
 
-
-//
-//    public static void showResign() {
-//        System.out.println("Game over - XXXX won by resignation");
-//    }
-//
-//    public static void showMoves() {
-//        System.out.println("This piece can move to ....");
-//    }
-
-
-=======
->>>>>>> torimodosi
 }

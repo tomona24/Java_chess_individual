@@ -2,11 +2,11 @@ package InfoInBoard_pieces;
 
 import java.util.ArrayList;
 
-public class Pawn extends Piece{
+public class Pawn extends Piece {
     private boolean isPromoted;
     private Piece newPiece;
 
-    public Pawn( boolean isWhite) {
+    public Pawn(boolean isWhite) {
         super(isWhite);
         this.isPromoted = false;
     }
@@ -27,12 +27,16 @@ public class Pawn extends Piece{
 //        }
 //    }
 
-    public boolean getIsPromoted() { return isPromoted;}
+    public boolean getIsPromoted() {
+        return isPromoted;
+    }
 
 
-    public Piece getNewPiece() { return newPiece; }
+    public Piece getNewPiece() {
+        return newPiece;
+    }
 
-    public void setNewPiece(Piece newPiece){
+    public void setNewPiece(Piece newPiece) {
         this.newPiece = newPiece;
     }
 
@@ -44,33 +48,36 @@ public class Pawn extends Piece{
         return "♟";
     }
 
+
+
     @Override
-    public ArrayList isValidMove(int fromX, int fromY) {
-        ArrayList<int[]> list = new ArrayList<>();
-        if(getIsWhite()) {
-            list.add(new int[]{fromX, fromY - 1});
-            list.add(new int[]{fromX - 1, fromY - 1});
-            list.add(new int[]{fromX + 1, fromY - 1});
-            if(fromY == 1) {
-                list.add(new int[]{fromX, fromY - 2});
+    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
+        ArrayList<int[]> possibilities = new ArrayList<>();
+        if (getIsWhite()) {
+            if(fromX > 0 && pieces.getPieces()[fromX - 1][fromY + 1] != null && !pieces.getPieces()[fromX][fromY + 1].getIsWhite()) {
+                    possibilities.add(new int[]{fromX - 1, fromY + 1});
+            }else if(fromX < 7 && pieces.getPieces()[fromX + 1][fromY + 1] != null && !pieces.getPieces()[fromX][fromY + 1].getIsWhite()) {
+                    possibilities.add(new int[]{fromX + 1, fromY + 1});
+            } else if(pieces.getPieces()[fromX][fromY + 1] == null){
+                possibilities.add(new int[]{fromX, fromY + 1});
+                if (fromY == 1 && pieces.getPieces()[fromX][fromY + 2] == null) {
+                    possibilities.add(new int[]{fromX, fromY + 2});
+                }
             }
         } else {
-            list.add(new int[]{fromX, fromY + 1});
-            list.add(new int[]{fromX - 1, fromY + 1});
-            list.add(new int[]{fromX + 1, fromY + 1});
-            if(fromY == 6) {
-                list.add(new int[]{fromX, fromY + 2});
+            // x = 2, x = 6
+            if(fromX > 0 && pieces.getPieces()[fromX - 1][fromY - 1] != null && pieces.getPieces()[fromX][fromY - 1].getIsWhite()) {
+                    possibilities.add(new int[]{fromX - 1, fromY - 1});
+            } else if (fromX < 7 && pieces.getPieces()[fromX + 1][fromY - 1] != null && pieces.getPieces()[fromX][fromY - 1].getIsWhite()) {
+                    possibilities.add(new int[]{fromX + 1, fromY - 1});
+            } else if(pieces.getPieces()[fromX][fromY - 1] == null){
+                possibilities.add(new int[]{fromX, fromY - 1});
+                if (fromY == 6 && pieces.getPieces()[fromX][fromY - 2] == null) {
+                    possibilities.add(new int[]{fromX, fromY - 2});
+                }
             }
         }
-        return list;
+        return possibilities;
     }
-//    @Override
-//    public boolean isValidMove(int fromX, int fromY, int toX, int toY) {
-//        if(!super.isValidMove(fromX, fromY, toX, toY)){
-//            return false;
-//        }
-//        boolean pt1 = toY == fromY + 1 && toX == fromX;
-//        return pt1;
-//    }
 
 }

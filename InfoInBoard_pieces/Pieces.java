@@ -42,6 +42,9 @@ public class Pieces {
         pieces[5][7] = new Bishop(false);
         pieces[6][7] = new Knight(false);
         pieces[7][7] = new Rook(false);
+
+
+        pieces[2][5] = new Pawn(false);
     }
 
 
