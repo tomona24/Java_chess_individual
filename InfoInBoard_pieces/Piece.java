@@ -1,21 +1,16 @@
 package InfoInBoard_pieces;
 
+import java.util.ArrayList;
+
 public abstract class Piece {
-    private Position position;
     private boolean isWhite;
 
     // constructor
-    public Piece(Position position, boolean isWhite) {
-        this.position = position;
+    public Piece( boolean isWhite) {
         this.isWhite = isWhite;
     }
 
     // getters
-    public Position getPosition() {
-        return position;
-    }
-    public int getX() {return position.getX();}
-    public int getY() {return position.getY();}
 
     public boolean getIsWhite() {
         return isWhite;
@@ -23,9 +18,6 @@ public abstract class Piece {
 
     //setter
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
 
     public void setColor(boolean isWhite) {
         this.isWhite = isWhite;
@@ -33,16 +25,9 @@ public abstract class Piece {
 
     public abstract String getPiece();
 
-//    //    public abstract void canMove();
-//    public boolean isValidMove(Position newPosition) {
-//        if(newPosition.getRow() > 0 && newPosition.getCol() > 0
-//        && newPosition.getRow() < 8 && newPosition.getCol() < 8) {
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
+    //    public abstract void canMove();
+    public abstract ArrayList isValidMove(int fromX, int fromY);
+
 
     @Override
     public boolean equals(Object obj) {
