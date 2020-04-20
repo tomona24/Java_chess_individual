@@ -1,16 +1,10 @@
 package InfoInBoard_input;
 
-import InfoInBoard_pieces.Position;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Input {
-    private static final String HELP = "help";
-    private static final String BOARD = "board";
-    private static final String RESIGN = "resign";
-    private static final String MOVES = "moves";
-    private static final String[] TYPES = {HELP, BOARD, RESIGN, MOVES};
+    static final String[] TYPES = {"help", "board", "resign", "moves"};
 
     public static String getUserInput(String prompt) {
         System.out.print(prompt);

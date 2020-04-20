@@ -16,6 +16,7 @@ public class Menu {
         System.out.println(square);
         System.out.println(UCI);
     }
+<<<<<<< HEAD
 
 
 //
@@ -28,4 +29,6 @@ public class Menu {
 //    }
 
 
+=======
+>>>>>>> torimodosi
 }
