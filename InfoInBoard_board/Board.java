@@ -1,9 +1,6 @@
 package InfoInBoard_board;
-
-
 import InfoInBoard_input.Movement;
 import InfoInBoard_pieces.Piece;
-import InfoInBoard_pieces.Pieces;
 
 import java.util.List;
 
@@ -155,4 +152,5 @@ public class Board {
             return false;
         }
     }
+
 }

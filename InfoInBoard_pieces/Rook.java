@@ -1,5 +1,7 @@
 package InfoInBoard_pieces;
 
+import InfoInBoard_board.Pieces;
+
 import java.util.ArrayList;
 
 public class Rook extends Piece {

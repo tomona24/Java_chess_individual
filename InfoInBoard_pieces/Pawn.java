@@ -1,45 +1,14 @@
 package InfoInBoard_pieces;
 
+import InfoInBoard_board.Pieces;
+
 import java.util.ArrayList;
 
 public class Pawn extends Piece {
-    private boolean isPromoted;
-    private Piece newPiece;
-
     public Pawn(boolean isWhite) {
         super(isWhite);
-        this.isPromoted = false;
     }
 
-//
-//    //check for Pawn
-//    public boolean checkPromo() {
-//        if(position.getY() == 0 && getIsWhite() == false) {
-//            return true;
-//        } else if (position.getY() == 8 && getIsWhite() == true) {
-//            return true;
-//        }
-//        return false;
-//    }
-
-//    public void canPromote() {
-//        if(!isPromoted && checkPromo() ) {
-//            this.isPromoted = true;
-//        }
-//    }
-
-    public boolean getIsPromoted() {
-        return isPromoted;
-    }
-
-
-    public Piece getNewPiece() {
-        return newPiece;
-    }
-
-    public void setNewPiece(Piece newPiece) {
-        this.newPiece = newPiece;
-    }
 
     @Override
     public String getPiece() {
@@ -50,41 +19,53 @@ public class Pawn extends Piece {
     }
 
 
-
     @Override
     public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
         ArrayList<int[]> possibilities = new ArrayList<>();
         if (getIsWhite()) {
-            Piece frontLeft = pieces.getPieces()[fromX - 1][fromY + 1];
-            Piece frontRight = pieces.getPieces()[fromX + 1][fromY + 1];
-            Piece front = pieces.getPieces()[fromX][fromY + 1];
-            if(fromX > 1 && frontLeft != null && !frontLeft.getIsWhite()) {
+            if (fromX > 0 && fromY < 7) {
+                Piece frontLeft = pieces.getPieces()[fromX - 1][fromY + 1];
+                if (frontLeft != null && !frontLeft.getIsWhite()) {
                     possibilities.add(new int[]{fromX - 1, fromY + 1});
+                }
             }
-            if(fromX < 7 && frontRight != null && !frontRight.getIsWhite()) {
+            if (fromX < 7 && fromY < 7) {
+                Piece frontRight = pieces.getPieces()[fromX + 1][fromY + 1];
+                if (frontRight != null && !frontRight.getIsWhite()) {
                     possibilities.add(new int[]{fromX + 1, fromY + 1});
+                }
             }
-            if(front == null){
-                possibilities.add(new int[]{fromX, fromY + 1});
-                if (fromY == 1 && pieces.getPieces()[fromX][fromY + 2] == null) {
-                    possibilities.add(new int[]{fromX, fromY + 2});
+            if (fromX < 8 && fromY < 7) {
+                Piece front = pieces.getPieces()[fromX][fromY + 1];
+                if (front == null) {
+                    possibilities.add(new int[]{fromX, fromY + 1});
+                    if (fromY == 1 && pieces.getPieces()[fromX][fromY + 2] == null) {
+                        possibilities.add(new int[]{fromX, fromY + 2});
+                    }
                 }
             }
         } else {
             // x = 2, x = 6
-            Piece frontLeft = pieces.getPieces()[fromX - 1][fromY - 1];
-            Piece frontRight = pieces.getPieces()[fromX + 1][fromY - 1];
-            Piece front = pieces.getPieces()[fromX][fromY - 1];
-            if((fromX > 1) && (frontLeft != null) && frontLeft.getIsWhite()) {
+            if (fromX > 0 && fromY > 0) {
+                Piece frontLeft = pieces.getPieces()[fromX - 1][fromY - 1];
+
+                if ((fromX > 1) && (frontLeft != null) && frontLeft.getIsWhite()) {
                     possibilities.add(new int[]{fromX - 1, fromY - 1});
+                }
             }
-            if (fromX < 7 && frontRight != null && frontRight.getIsWhite()) {
+            if (fromX < 7 && fromY > 0) {
+                Piece frontRight = pieces.getPieces()[fromX + 1][fromY - 1];
+                if (fromX < 7 && frontRight != null && frontRight.getIsWhite()) {
                     possibilities.add(new int[]{fromX + 1, fromY - 1});
+                }
             }
-            if(front == null){
-                possibilities.add(new int[]{fromX, fromY - 1});
-                if (fromY == 6 && pieces.getPieces()[fromX][fromY - 2] == null) {
-                    possibilities.add(new int[]{fromX, fromY - 2});
+            if(fromY > 0) {
+                Piece front = pieces.getPieces()[fromX][fromY - 1];
+                if (front == null) {
+                    possibilities.add(new int[]{fromX, fromY - 1});
+                    if (fromY == 6 && pieces.getPieces()[fromX][fromY - 2] == null) {
+                        possibilities.add(new int[]{fromX, fromY - 2});
+                    }
                 }
             }
         }
