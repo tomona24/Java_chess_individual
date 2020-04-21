@@ -3,6 +3,7 @@ package InfoInBoard_input;
 
 public class Movement {
     private int[] letters;
+
     public Movement() {}
 
     public int[] makeLettersList(String input){
