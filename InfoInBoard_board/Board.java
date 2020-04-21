@@ -5,15 +5,20 @@ import InfoInBoard_input.Movement;
 import InfoInBoard_pieces.Piece;
 import InfoInBoard_pieces.Pieces;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
     private Pieces pieces;
+    private Movement movement;
+    private boolean turnIsWhite;
+    private boolean killedKing;
 
     // constructor
     public Board() throws Exception {
         this.pieces = new Pieces();
+        movement = new Movement();
+        turnIsWhite = true;
+        killedKing = false;
     }
 
     public void initializeBoard() throws Exception {
@@ -21,13 +26,21 @@ public class Board {
         reloadBoard();
     }
 
-    public void reloadBoard()  {
-        showOnBoard(pieces);
+    public boolean getTurnIsWhite(){
+        return turnIsWhite;
     }
 
-    private void showOnBoard(Pieces arr) {
+    public boolean getKilledKing() {
+        return killedKing;
+    }
+
+
+    public void reloadBoard()  {
+        showOnBoard(pieces.getPieces());
+    }
+
+    private void showOnBoard(Piece[][] pieces) {
         int num = 1;
-        Piece[][] pieces = arr.getPieces();
         System.out.println(boardTopEdge());
         for (int i = 0; i < 8; i++) {
             System.out.print(boardSideEdge());
@@ -77,63 +90,69 @@ public class Board {
     }
 
 
-
     public void movement(String input) {
-        int[] letters = Movement.makeLettersList(input);
-        moveFromTo(letters);
+        int[] letters = movement.makeLettersList(input);
+        if(hasPiece(letters[0], letters[1], pieces.getPieces())) {
+            moveFromTo(letters, pieces.getPieces());
+        } else {
+            System.out.println("You can't select!");
+        }
         reloadBoard();
     }
-
-    /**
-     * For movement
-     * @param input
-     * @return
-     */
-
-
-
 
     /**
      * check the move (2letters)
      * @return
      */
-    public List<int[]> checkThePossibilities(int fromX, int fromY){
-        Piece[][] pieces = this.pieces.getPieces();
+    private List<int[]> checkThePossibilities(int fromX, int fromY, Piece[][] pieces){
         Piece piece = pieces[fromX][fromY];
-        System.out.println("white:" + piece.getIsWhite() + piece.getPiece() + " x:" + fromX + " y:" + fromY);
         List<int[]> possibilities = piece.possibleMovement(fromX, fromY, this.pieces);
         return possibilities;
     }
 
 
-    // check the move (4letters)
-    private void moveFromTo(int[] letters) {
+
+    private void moveFromTo(int[] letters, Piece[][] pieces) {
         int fromX = letters[0];
         int fromY = letters[1];
         int toX = letters[2];
         int toY = letters[3];
-        Piece[][] pieces = this.pieces.getPieces();
-        List<int[]> possibilities = checkThePossibilities(fromX, fromY);
+        List<int[]> possibilities = checkThePossibilities(fromX, fromY, pieces);
         boolean canMove = false;
-        for (int[] position: possibilities
-             ) {
+        for (int[] position: possibilities) {
             if(position[0] == toX && position[1] == toY){
                 canMove = true;
                 break;
             }
         }
         if(canMove) {
+            if(pieces[toX][toY] != null && pieces[toX][toY].getClass().toString().equals("class InfoInBoard_pieces.King")){
+                killedKing = true;
+            }
             pieces[toX][toY] = pieces[fromX][fromY];
             pieces[fromX][fromY] = null;
+            turnIsWhite = !turnIsWhite;
         }
     }
 
     public void showPossibility(String input) {
-        int[] letters = Movement.makeLettersList(input);
-        List<int[]> possibilities = checkThePossibilities(letters[0], letters[1]);
-        for (int[] possible: possibilities
-             ) {
-            System.out.println(Movement.convertIntToPosition(possible));
+        int[] letters = movement.makeLettersList(input);
+        if(hasPiece(letters[0], letters[1], pieces.getPieces())) {
+            List<int[]> possibilities = checkThePossibilities(letters[0], letters[1], pieces.getPieces());
+            for (int[] possible : possibilities) {
+                System.out.println(movement.convertIntToPosition(possible));
+            }
+        } else {
+            System.out.println("You can't select!");
+        }
+    }
+
+    private boolean hasPiece(int fromX, int fromY, Piece[][] pieces){
+        Piece piece = pieces[fromX][fromY];
+        if(piece != null && piece.getIsWhite() == turnIsWhite) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

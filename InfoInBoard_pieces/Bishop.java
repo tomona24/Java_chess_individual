@@ -21,10 +21,10 @@ public class Bishop extends Piece {
     @Override
     public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
         ArrayList<int[]> list = new ArrayList<>();
+        Piece[][] pieceList = pieces.getPieces();
         int kariX = fromX + 1;
         int kariY = fromY + 1;
-        Piece[][] pieceList = pieces.getPieces();
-        while (kariX < 8 || kariY < 8) {
+        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
             if (pieceList[kariX][kariY] == null) {
                 list.add(new int[]{kariX++, kariY++});
             } else {
@@ -36,7 +36,7 @@ public class Bishop extends Piece {
         }
         kariX = fromX + 1;
         kariY = fromY - 1;
-        while (kariX < 8 || kariY > -1) {
+        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
             if (pieceList[kariX][kariY] == null) {
                 list.add(new int[]{kariX++, kariY--});
             } else {
@@ -48,7 +48,7 @@ public class Bishop extends Piece {
         }
         kariX = fromX - 1;
         kariY = fromY + 1;
-        while (kariX > -1 || kariY < 8) {
+        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
             if (pieceList[kariX][kariY] == null) {
                 list.add(new int[]{kariX--, kariY++});
             } else {
@@ -60,7 +60,7 @@ public class Bishop extends Piece {
         }
         kariX = fromX - 1;
         kariY = fromY - 1;
-        while (kariX > -1 || kariY > -1) {
+        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
             if (pieceList[kariX][kariY] == null) {
                 list.add(new int[]{kariX--, kariY--});
             } else {

@@ -25,7 +25,7 @@ public abstract class Piece {
 
     public abstract String getPiece();
 
-    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
+    public ArrayList<int[]> possibleMovement(int fromX, int fromY, Pieces pieces) {
 
         return null;
     }
