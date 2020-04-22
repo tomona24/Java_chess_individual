@@ -2,12 +2,14 @@ package InfoInBoard_pieces;
 
 import InfoInBoard_board.Pieces;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Rook extends Piece {
+    PossibleMovementHelper possibleMovementHelper;
 
     public Rook(boolean isWhite) {
         super(isWhite);
+        this.possibleMovementHelper = new PossibleMovementHelper();
     }
 
 
@@ -20,54 +22,11 @@ public class Rook extends Piece {
     }
 
     @Override
-    public ArrayList<int[]> possibleMovement(int fromX, int fromY, Pieces pieces) {
-        ArrayList<int[]> list = new ArrayList<>();
-        // forward
-        for (int i = fromY + 1; i < 8; i++) {
-            if (pieces.getPieces()[fromX][i] != null) {
-                if (pieces.getPieces()[fromX][i].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{fromX, i});
-                }
-                break;
-            } else {
-                list.add(new int[]{fromX, i});
-            }
-        }
-        // back
-        for (int i = fromY - 1; i > -1; i--) {
-            if (pieces.getPieces()[fromX][i] != null) {
-                if (pieces.getPieces()[fromX][i].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{fromX, i});
-                }
-                break;
-            } else {
-                list.add(new int[]{fromX, i});
-            }
-        }
-        // right
-        for (int i = fromX + 1; i < 8; i++) {
-            if (pieces.getPieces()[i][fromY] != null) {
-                if (pieces.getPieces()[i][fromY].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{i, fromY});
-                }
-                break;
-            } else {
-                list.add(new int[]{i, fromY});
-            }
-        }
-
-        // left
-        for (int i = fromX - 1; i > -1; i--) {
-            if (pieces.getPieces()[i][fromY] != null) {
-                if (pieces.getPieces()[i][fromY].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{i, fromY});
-                }
-                    break;
-                } else {
-                list.add(new int[]{i, fromY});
-            }
-        }
-        return list;
+    public HashSet possibleMovement(int fromX, int fromY, Pieces pieces) {
+        return possibleMovementHelper.possibleMovementRook(fromX, fromY, getIsWhite(), pieces);
     }
 
+    public String getClassName() {
+        return "Rook";
+    }
 }

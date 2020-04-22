@@ -3,6 +3,7 @@ package InfoInBoard_pieces;
 import InfoInBoard_board.Pieces;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class King extends Piece {
 
@@ -21,8 +22,8 @@ public class King extends Piece {
 
 
     @Override
-    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
-        ArrayList<int[]> list = new ArrayList<>();
+    public HashSet possibleMovement(int fromX, int fromY, Pieces pieces) {
+        HashSet<int[]> list = new HashSet<>();
         int[][] allPossibilities = new int[][]{
                 {fromX - 1, fromY + 1},
                 {fromX - 1, fromY},
@@ -48,15 +49,8 @@ public class King extends Piece {
         return list;
     }
 
-//
-//    @Override
-//    public boolean isValidMove(int fromX, int fromY, int toX, int toY) {
-//        if(!super.isValidMove(fromX, fromY, toX, toY)){
-//            return false;
-//        }
-//        boolean x = (fromX - 1 <= toX)  && (toX <= fromX + 1);
-//        boolean y = (fromY - 1 <= toY) && (toY <= fromY + 1);
-//        return x && y;
-//    }
+    public String getClassName() {
+        return "King";
+    }
 
 }

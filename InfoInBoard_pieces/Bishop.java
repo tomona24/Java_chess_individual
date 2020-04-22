@@ -2,12 +2,13 @@ package InfoInBoard_pieces;
 
 import InfoInBoard_board.Pieces;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Bishop extends Piece {
-
+    PossibleMovementHelper possibleMovementHelper;
     public Bishop(boolean isWhite) {
         super(isWhite);
+        possibleMovementHelper = new PossibleMovementHelper();
     }
 
 
@@ -21,69 +22,13 @@ public class Bishop extends Piece {
 
 
     @Override
-    public ArrayList possibleMovement(int fromX, int fromY, Pieces pieces) {
-        ArrayList<int[]> list = new ArrayList<>();
-        Piece[][] pieceList = pieces.getPieces();
-        int kariX = fromX + 1;
-        int kariY = fromY + 1;
-        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
-            if (pieceList[kariX][kariY] == null) {
-                list.add(new int[]{kariX++, kariY++});
-            } else {
-                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{kariX, kariY});
-                }
-                break;
-            }
-        }
-        kariX = fromX + 1;
-        kariY = fromY - 1;
-        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
-            if (pieceList[kariX][kariY] == null) {
-                list.add(new int[]{kariX++, kariY--});
-            } else {
-                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{kariX, kariY});
-                }
-                break;
-            }
-        }
-        kariX = fromX - 1;
-        kariY = fromY + 1;
-        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
-            if (pieceList[kariX][kariY] == null) {
-                list.add(new int[]{kariX--, kariY++});
-            } else {
-                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{kariX, kariY});
-                }
-                break;
-            }
-        }
-        kariX = fromX - 1;
-        kariY = fromY - 1;
-        while (kariX < 8 && kariX > -1 && kariY > -1 && kariY < 8) {
-            if (pieceList[kariX][kariY] == null) {
-                list.add(new int[]{kariX--, kariY--});
-            } else {
-                if (pieceList[kariX][kariY].getIsWhite() != getIsWhite()) {
-                    list.add(new int[]{kariX, kariY});
-                }
-                break;
-            }
-        }
-        return list;
+    public HashSet possibleMovement(int fromX, int fromY, Pieces pieces) {
+        return possibleMovementHelper.possibleMovementBishop(fromX, fromY, getIsWhite(), pieces);
+    }
+
+    public String getClassName() {
+        return "Bishop";
     }
 
 
-//
-//    @Override
-//    public boolean isValidMove(int fromX, int fromY, int toX, int toY) {
-//        if (!super.isValidMove(fromX, fromY, toX, toY)) {
-//            return false;
-//        }
-//        boolean from = fromX % 2 == 0 && fromY == 0;
-//        boolean to = toX % 2 == 0 && toY == 0;
-//        return (from && to) || (!from && !to);
-//    }
 }

@@ -1,7 +1,10 @@
 package InfoInBoard_board;
+
 import InfoInBoard_input.Movement;
+import InfoInBoard_pieces.Pawn;
 import InfoInBoard_pieces.Piece;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class Board {
@@ -9,6 +12,7 @@ public class Board {
     private Movement movement;
     private boolean turnIsWhite;
     private boolean killedKing;
+    private Promotion promotion;
 
     // constructor
     public Board() throws Exception {
@@ -16,6 +20,7 @@ public class Board {
         movement = new Movement();
         turnIsWhite = true;
         killedKing = false;
+        promotion = new Promotion();
     }
 
     public void initializeBoard() throws Exception {
@@ -23,7 +28,7 @@ public class Board {
         reloadBoard();
     }
 
-    public boolean getTurnIsWhite(){
+    public boolean getTurnIsWhite() {
         return turnIsWhite;
     }
 
@@ -32,7 +37,7 @@ public class Board {
     }
 
 
-    public void reloadBoard()  {
+    public void reloadBoard() {
         showOnBoard(pieces.getPieces());
     }
 
@@ -89,7 +94,7 @@ public class Board {
 
     public void movement(String input) {
         int[] letters = movement.makeLettersList(input);
-        if(hasPiece(letters[0], letters[1], pieces.getPieces())) {
+        if (hasPiece(letters[0], letters[1], pieces.getPieces())) {
             moveFromTo(letters, pieces.getPieces());
         } else {
             System.out.println("You can't select!");
@@ -99,14 +104,13 @@ public class Board {
 
     /**
      * check the move (2letters)
+     *
      * @return
      */
-    private List<int[]> checkThePossibilities(int fromX, int fromY, Piece[][] pieces){
+    private HashSet checkThePossibilities(int fromX, int fromY, Piece[][] pieces) {
         Piece piece = pieces[fromX][fromY];
-        List<int[]> possibilities = piece.possibleMovement(fromX, fromY, this.pieces);
-        return possibilities;
+        return piece.possibleMovement(fromX, fromY, this.pieces);
     }
-
 
 
     private void moveFromTo(int[] letters, Piece[][] pieces) {
@@ -114,19 +118,33 @@ public class Board {
         int fromY = letters[1];
         int toX = letters[2];
         int toY = letters[3];
-        List<int[]> possibilities = checkThePossibilities(fromX, fromY, pieces);
+        HashSet<int[]> possibilities = checkThePossibilities(fromX, fromY, pieces);
         boolean canMove = false;
-        for (int[] position: possibilities) {
-            if(position[0] == toX && position[1] == toY){
+        for (int[] position : possibilities) {
+            if (position[0] == toX && position[1] == toY) {
                 canMove = true;
                 break;
             }
         }
-        if(canMove) {
-            if(pieces[toX][toY] != null && pieces[toX][toY].getClass().toString().equals("class InfoInBoard_pieces.King")){
+        if (canMove) {
+            if (pieces[toX][toY] != null && pieces[toX][toY].getClassName().equals("King")) {
                 killedKing = true;
             }
-            pieces[toX][toY] = pieces[fromX][fromY];
+            if (promotion.canPromotion(pieces[fromX][fromY], toY)) {
+                pieces[toX][toY] = promotion.promotion(pieces[fromX][fromY]);
+            } else {
+                pieces[toX][toY] = pieces[fromX][fromY];
+            }
+            if (pieces[fromX][fromY].getClassName().equals("Pawn")) {
+                System.out.println(toX == fromX + 1);
+                System.out.println();
+                System.out.println(((Pawn) pieces[fromX][fromY]).checkLeftTHeEnPassant(fromX, fromY, this.pieces));
+                if (toX == fromX - 1 && ((Pawn) pieces[fromX][fromY]).checkRightTheEnPassant(fromX, fromY, this.pieces)) {
+                    pieces[fromX - 1][fromY] = null;
+                } else if (toX == fromX + 1 && ((Pawn) pieces[fromX][fromY]).checkLeftTHeEnPassant(fromX, fromY, this.pieces)) {
+                    pieces[fromX + 1][fromY] = null;
+                }
+            }
             pieces[fromX][fromY] = null;
             turnIsWhite = !turnIsWhite;
         }
@@ -134,8 +152,8 @@ public class Board {
 
     public void showPossibility(String input) {
         int[] letters = movement.makeLettersList(input);
-        if(hasPiece(letters[0], letters[1], pieces.getPieces())) {
-            List<int[]> possibilities = checkThePossibilities(letters[0], letters[1], pieces.getPieces());
+        if (hasPiece(letters[0], letters[1], pieces.getPieces())) {
+            HashSet<int[]> possibilities = checkThePossibilities(letters[0], letters[1], pieces.getPieces());
             for (int[] possible : possibilities) {
                 System.out.println(movement.convertIntToPosition(possible));
             }
@@ -144,9 +162,9 @@ public class Board {
         }
     }
 
-    private boolean hasPiece(int fromX, int fromY, Piece[][] pieces){
+    private boolean hasPiece(int fromX, int fromY, Piece[][] pieces) {
         Piece piece = pieces[fromX][fromY];
-        if(piece != null && piece.getIsWhite() == turnIsWhite) {
+        if (piece != null && piece.getIsWhite() == turnIsWhite) {
             return true;
         } else {
             return false;
