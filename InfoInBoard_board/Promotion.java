@@ -5,7 +5,6 @@ import InfoInBoard_pieces.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import static InfoInBoard_input.Input.invalidInput;
 
 public class Promotion {
 

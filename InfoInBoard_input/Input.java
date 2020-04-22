@@ -4,9 +4,13 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Input {
-    static final String[] TYPES = {"help", "board", "resign", "moves"};
+    private final String[] TYPES = {"help", "board", "resign", "moves"};
 
-    public static String getUserInput(String prompt) {
+    public Input() {
+
+    }
+
+    public String getUserInput(String prompt) {
         System.out.print(prompt);
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
@@ -18,7 +22,7 @@ public class Input {
         return userInput;
     }
 
-    public static boolean invalidInput(String input) {
+    private boolean invalidInput(String input) {
         if (checkString(input)) {
             return true;
         } else if (input.length() == 2 && checkSquare(input)) {
@@ -29,7 +33,7 @@ public class Input {
         return false;
     }
 
-    public static boolean checkString(String input) {
+    private boolean checkString(String input) {
         for (String type : TYPES) {
             if (type.equals(input)) {
                 return true;
@@ -39,7 +43,7 @@ public class Input {
     }
 
 
-    public static boolean checkSquare(String input) {
+    private boolean checkSquare(String input) {
         char x = input.charAt(0);
         char y = input.charAt(1);
         if (checkAlpha(x) && checkNum(y)) {
@@ -50,7 +54,7 @@ public class Input {
 
     }
 
-    public static boolean checkMove(String input) {
+    private boolean checkMove(String input) {
         char fromX = input.charAt(0);
         char fromY = input.charAt(1);
         char toX = input.charAt(2);
@@ -64,7 +68,7 @@ public class Input {
     }
 
 
-    private static boolean checkNum(Character c) {
+    private boolean checkNum(Character c) {
         try {
             int num = Integer.parseInt(String.valueOf(c));
             if (num <= 8 && num > 0) {
@@ -78,7 +82,7 @@ public class Input {
     }
 
 
-    private static boolean checkAlpha(Character c) {
+    private boolean checkAlpha(Character c) {
         if ((int)Character.toUpperCase(c) >= 65 && (int)Character.toUpperCase(c) < 73) {
             return true;
         } else {

@@ -1,17 +1,17 @@
 import InfoInBoard_board.Board;
 import InfoInBoard_input.Input;
 
-
-
 public class GameController {
     private final String HELP = "help";
     private final String BOARD = "board";
     private final String RESIGN = "resign";
     private Board newBoard;
     private boolean isContinue;
+    private Input input;
 
     public GameController() throws Exception {
         newBoard = new Board();
+        this.input = new Input();
         isContinue = true;
     }
 
@@ -19,8 +19,8 @@ public class GameController {
         newBoard.initializeBoard();
         while (isContinue) {
             declareTurn();
-            String input = Input.getUserInput("Enter UCI (type 'help' for help) : ");
-            makeSet(input);
+            String in = input.getUserInput("Enter UCI (type 'help' for help) : ");
+            makeSet(in);
             if(newBoard.getKilledKing()) {
                 isContinue = false;
                 judgeWinner();
@@ -78,14 +78,4 @@ public class GameController {
         }
     }
 
-
-    public boolean getIsContinue() {
-        return isContinue;
-    }
-
-
-
-    public void setIsContinue(boolean isContinue) {
-        this.isContinue = isContinue;
-    }
 }

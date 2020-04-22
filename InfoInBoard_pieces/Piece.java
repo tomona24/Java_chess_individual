@@ -1,7 +1,6 @@
 package InfoInBoard_pieces;
 
 import InfoInBoard_board.Pieces;
-
 import java.util.HashSet;
 
 public abstract class Piece {
@@ -17,20 +16,9 @@ public abstract class Piece {
     public boolean getIsWhite() {
         return isWhite;
     }
-
-    //setter
-
-
-    public void setColor(boolean isWhite) {
-        this.isWhite = isWhite;
-    }
-
     public abstract String getPiece();
 
-    public HashSet possibleMovement(int fromX, int fromY, Pieces pieces) {
-
-        return null;
-    }
+    public abstract HashSet possibleMovement(int fromX, int fromY, Pieces pieces);
 
     @Override
     public boolean equals(Object obj) {

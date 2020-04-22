@@ -1,8 +1,6 @@
 package InfoInBoard_pieces;
 
 import InfoInBoard_board.Pieces;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class King extends Piece {

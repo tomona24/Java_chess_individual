@@ -1,8 +1,6 @@
 package InfoInBoard_pieces;
 
 import InfoInBoard_board.Pieces;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Queen extends Piece {
@@ -29,6 +27,7 @@ public class Queen extends Piece {
         list.addAll(possibleMovementHelper.possibleMovementRook(fromX, fromY, getIsWhite(), pieces));
         return list;
     }
+
     public String getClassName() {
         return "Queen";
     }

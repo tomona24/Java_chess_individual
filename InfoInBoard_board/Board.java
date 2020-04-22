@@ -136,9 +136,6 @@ public class Board {
                 pieces[toX][toY] = pieces[fromX][fromY];
             }
             if (pieces[fromX][fromY].getClassName().equals("Pawn")) {
-                System.out.println(toX == fromX + 1);
-                System.out.println();
-                System.out.println(((Pawn) pieces[fromX][fromY]).checkLeftTHeEnPassant(fromX, fromY, this.pieces));
                 if (toX == fromX - 1 && ((Pawn) pieces[fromX][fromY]).checkRightTheEnPassant(fromX, fromY, this.pieces)) {
                     pieces[fromX - 1][fromY] = null;
                 } else if (toX == fromX + 1 && ((Pawn) pieces[fromX][fromY]).checkLeftTHeEnPassant(fromX, fromY, this.pieces)) {

@@ -1,7 +1,6 @@
 package InfoInBoard_pieces;
 
 import InfoInBoard_board.Pieces;
-
 import java.util.HashSet;
 
 public class Bishop extends Piece {
